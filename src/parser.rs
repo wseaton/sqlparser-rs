@@ -691,6 +691,7 @@ impl<'a> Parser<'a> {
                 Keyword::AND => Some(BinaryOperator::And),
                 Keyword::OR => Some(BinaryOperator::Or),
                 Keyword::LIKE => Some(BinaryOperator::Like),
+                Keyword::LIKE_REGEX => Some(BinaryOperator::LikeRegex),
                 Keyword::NOT => {
                     if self.parse_keyword(Keyword::LIKE) {
                         Some(BinaryOperator::NotLike)
@@ -818,6 +819,7 @@ impl<'a> Parser<'a> {
             Token::Word(w) if w.keyword == Keyword::IN => Ok(Self::BETWEEN_PREC),
             Token::Word(w) if w.keyword == Keyword::BETWEEN => Ok(Self::BETWEEN_PREC),
             Token::Word(w) if w.keyword == Keyword::LIKE => Ok(Self::BETWEEN_PREC),
+            Token::Word(w) if w.keyword == Keyword::LIKE_REGEX => Ok(Self::BETWEEN_PREC),
             Token::Eq | Token::Lt | Token::LtEq | Token::Neq | Token::Gt | Token::GtEq => Ok(20),
             Token::Pipe => Ok(21),
             Token::Caret | Token::Sharp | Token::ShiftRight | Token::ShiftLeft => Ok(22),
